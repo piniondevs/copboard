@@ -80,6 +80,12 @@ client.on("ready", async () => {
       },
     ],
   });
+
+  commands?.create({
+    name: 'help',
+    description: 'Shows the help menu',
+  });
+  
 });
 
 setInterval(refreshPresence, 300000);
