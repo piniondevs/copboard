@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { getLeaderboard, getLeader } from "./utils/leaderboard";
+import fs from "fs/promises";
 
 dotenv.config();
 
@@ -47,11 +48,66 @@ const refreshPresence = async () => {
 
 client.on("ready", async () => {
   console.log(`Bot is ready`);
+
   refreshPresence();
+
+  const guild = client.guilds.cache.get("982327785009864904");
+  let commands;
+
+  if (guild) {
+    commands = guild.commands;
+  } else {
+    commands = client.application?.commands;
+  }
+
+  commands?.create({
+    name: "submit",
+    description: "Submit a new cop request.",
+    options: [
+      {
+        name: "lore",
+        description: "The lore behind your cop.",
+        type: Discord.Constants.ApplicationCommandOptionTypes.STRING,
+        required: true,
+      },
+      {
+        name: "rating",
+        description: "How much you want to rate the cop.",
+        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        min_value: 1,
+        max_value: 5,
+        required: true,
+      },
+    ],
+  });
 });
 
-setInterval(refreshPresence, 60000);
+setInterval(refreshPresence, 300000);
 
-client.on("messageCreate", (message) => {
-  if (message.author.id === client.user?.id) return;
+async function getCommands() {
+  let files = await fs.readdir("./commands");
+  files = files.map((item) => item.split(".")[0]);
+  let commands: any = {};
+
+  for (const file of files) {
+    let command = await import(`./commands/${file}`);
+    commands[command.name] = command;
+  }
+
+  return commands;
+}
+
+client.on("interactionCreate", async (interaction) => {
+  if (!interaction.isCommand()) return;
+
+  const { commandName } = interaction;
+
+  const commands = await getCommands();
+
+  if (!commands[commandName]) {
+    interaction.reply({ content: "Dont Got That Command", ephemeral: true });
+    return;
+  }
+
+  commands[commandName].handler(interaction);
 });
