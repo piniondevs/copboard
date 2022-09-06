@@ -61,6 +61,11 @@ client.on("ready", async () => {
   }
 
   commands?.create({
+    name: "help",
+    description: "Shows the help menu",
+  });
+
+  commands?.create({
     name: "submit",
     description: "Submit a new cop request.",
     options: [
@@ -82,10 +87,9 @@ client.on("ready", async () => {
   });
 
   commands?.create({
-    name: 'help',
-    description: 'Shows the help menu',
+    name: "list",
+    description: "Lists the current cop applications.",
   });
-  
 });
 
 setInterval(refreshPresence, 300000);

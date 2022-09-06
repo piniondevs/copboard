@@ -1,1 +1,13 @@
-[{"lore":"brick","proposedRating":3,"actualRatings":[]},{"lore":"some other cop","proposedRating":2,"actualRatings":[]},{"lore":"adolf hitlers underwear","proposedRating":2,"actualRatings":[]}]
+[
+  {
+    "lore": "brick",
+    "proposedRating": 3,
+    "actualRatings": [{ "id": "1015173340887003136", "rating": 2 }]
+  },
+  { "lore": "some other cop", "proposedRating": 2, "actualRatings": [] },
+  {
+    "lore": "adolf hitlers underwear",
+    "proposedRating": 2,
+    "actualRatings": []
+  }
+]
