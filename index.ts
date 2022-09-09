@@ -90,6 +90,12 @@ client.on("ready", async () => {
     name: "list",
     description: "Lists the current cop applications.",
   });
+
+  commands?.create({
+    name: "approve",
+    description: "Approve a pending cop and rate it.",
+  });
+
 });
 
 setInterval(refreshPresence, 300000);
