@@ -1,10 +1,14 @@
 import { Interaction } from "discord.js";
 
 module.exports = {
-  name: 'approve',
+  name: "approve",
   handler: (interaction: Interaction) => {
-    if (interaction.isRepliable()) {
-      interaction.reply('ill make this later')
-    } 
-  }
-}
+    if (!interaction.isRepliable()) return;
+    if (!interaction.isCommand()) return;
+
+    const index = interaction.options.getNumber("index");
+    const rating = interaction.options.getNumber("rating");
+
+    interaction.reply({ content: `${index} ${rating}` });
+  },
+};

@@ -94,8 +94,25 @@ client.on("ready", async () => {
   commands?.create({
     name: "approve",
     description: "Approve a pending cop and rate it.",
+    options: [
+      {
+        name: "index",
+        description: "The index number of the cop you got from the /list.",
+        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        min_value: 1,
+        required: true,
+      },
+      {
+        name: "rating",
+        description:
+          "The rating you wish to give that cop. Will be used to average later.",
+        type: Discord.Constants.ApplicationCommandOptionTypes.NUMBER,
+        min_value: 1,
+        max_value: 5,
+        required: true,
+      },
+    ],
   });
-
 });
 
 setInterval(refreshPresence, 300000);
